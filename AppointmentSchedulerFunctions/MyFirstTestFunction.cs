@@ -25,7 +25,7 @@ public static class MyFirstTestFunction
 
         return name != null
             ? new OkObjectResult($"Hello, {name}")
-            : new BadRequestObjectResult("PLEASE pass a name on the query string or in the request body");
+            : new BadRequestObjectResult("pLEASE pass a name on the query string or in the request body");
         
     }
 }
