@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentSchedulerFunctions", "AppointmentSchedulerFunctions\AppointmentSchedulerFunctions.csproj", "{0FCCE830-BCBC-4258-A72D-D9F2C0B79560}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentSchedulerFunctions", "AppointmentSchedulerFunctions\AppointmentSchedulerFunctions.csproj", "{294D2293-B304-4506-BB68-A8C16B0E99EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0FCCE830-BCBC-4258-A72D-D9F2C0B79560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FCCE830-BCBC-4258-A72D-D9F2C0B79560}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FCCE830-BCBC-4258-A72D-D9F2C0B79560}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FCCE830-BCBC-4258-A72D-D9F2C0B79560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{294D2293-B304-4506-BB68-A8C16B0E99EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{294D2293-B304-4506-BB68-A8C16B0E99EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{294D2293-B304-4506-BB68-A8C16B0E99EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{294D2293-B304-4506-BB68-A8C16B0E99EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

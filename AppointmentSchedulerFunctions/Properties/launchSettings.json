@@ -2,7 +2,7 @@
   "profiles": {
     "AppointmentSchedulerFunctions": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7255",
+      "commandLineArgs": "--port 7031",
       "launchBrowser": false
     }
   }
