@@ -69,11 +69,13 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
         _logger.LogInformation(
             $"Sending notification for appointment {appointment.AppointmentId} to {appointment.Name}");
 
-        var date = appointment.Date.ToLocalTime()
+        var date = appointment.Date
             .ToString("dddd, d MMMM yyyy 'ora' HH:mm", CultureInfo.CreateSpecificCulture("ro-RO"));
 
         var message = $"Programarea dvs. pentru data de {date} a fost inregistrata cu succes.";
+        
+        _logger.LogInformation(message);
 
-        await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
+        // await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
     }
 }
