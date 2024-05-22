@@ -1,4 +1,7 @@
-namespace AppointmentSchedulerFunctions;
+using AppointmentSchedulerFunctions.Inputs;
+using AppointmentSchedulerFunctions.Models;
+
+namespace AppointmentSchedulerFunctions.Helpers;
 
 public static class AppointmentExtensions
 {

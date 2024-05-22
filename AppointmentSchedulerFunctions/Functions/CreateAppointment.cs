@@ -1,10 +1,14 @@
-using System.Net;
 using System.Text.Json;
+using AppointmentSchedulerFunctions.Helpers;
+using AppointmentSchedulerFunctions.Inputs;
+using AppointmentSchedulerFunctions.Models;
+using AppointmentSchedulerFunctions.Outputs;
+using AppointmentSchedulerFunctions.Validators;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Functions;
 
 public class CreateAppointment(ILoggerFactory loggerFactory)
 {

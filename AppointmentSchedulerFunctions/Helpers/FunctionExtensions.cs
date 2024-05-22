@@ -1,9 +1,10 @@
 using System.Net;
+using AppointmentSchedulerFunctions.Models;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Helpers;
 
-public static class FunctionHelpers
+public static class FunctionExtensions
 {
     public static async Task<HttpResponseData> CreateOKResponseAsJson(this HttpRequestData request,
         Appointment appointment)

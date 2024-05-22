@@ -1,4 +1,4 @@
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Inputs;
 
 public class CreateAppointmentInput
 {

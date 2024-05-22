@@ -1,6 +1,7 @@
+using AppointmentSchedulerFunctions.Inputs;
 using FluentValidation;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Validators;
 
 public class CreateAppointmentInputValidator : AbstractValidator<CreateAppointmentInput>
 {

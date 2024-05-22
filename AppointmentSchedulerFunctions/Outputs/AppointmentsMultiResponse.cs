@@ -1,7 +1,8 @@
+using AppointmentSchedulerFunctions.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Outputs;
 
 public class AppointmentsMultiResponse
 {

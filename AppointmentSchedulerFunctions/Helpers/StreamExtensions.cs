@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Helpers;
 
 public static class StreamExtensions
 {

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace AppointmentSchedulerFunctions;
+namespace AppointmentSchedulerFunctions.Models;
 
 public class Appointment
 {
