@@ -56,7 +56,9 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
         }
         else
         {
-            await context.CreateTimer(TimeZoneInfo.ConvertTimeToUtc(appointment.Date).AddHours(-24), cancellationToken);
+            var fireAt = appointment.Date.AddHours(-24).LocalDateTime;
+            _logger.LogInformation($"Scheduling notification for {fireAt}");
+            await context.CreateTimer(fireAt, cancellationToken);
         }
 
         await context.CallActivityAsync(nameof(NotifyUser), appointment);
@@ -68,7 +70,7 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
     {
         _logger.LogInformation(
             $"Sending notification for appointment {appointment.AppointmentId} to {appointment.Name}");
-
+        
         var date = appointment.Date
             .ToString("dddd, d MMMM yyyy 'ora' HH:mm", CultureInfo.CreateSpecificCulture("ro-RO"));
 
