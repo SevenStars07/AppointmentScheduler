@@ -1,7 +1,5 @@
-using System.Text.Json;
 using AppointmentSchedulerFunctions.Helpers;
 using AppointmentSchedulerFunctions.Inputs;
-using AppointmentSchedulerFunctions.Models;
 using AppointmentSchedulerFunctions.Outputs;
 using AppointmentSchedulerFunctions.Validators;
 using Microsoft.Azure.Functions.Worker;
@@ -14,7 +12,7 @@ public class CreateAppointment(ILoggerFactory loggerFactory)
 {
     private readonly ILogger _logger = loggerFactory.CreateLogger<CreateAppointment>();
 
-    [Function("CreateAppointment")]
+    [Function(nameof(CreateAppointment))]
     public async Task<AppointmentsMultiResponse> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "create-appointment")]
         HttpRequestData req,
@@ -41,15 +39,11 @@ public class CreateAppointment(ILoggerFactory loggerFactory)
 
         var appointment = createAppointmentInput.ToAppointment();
 
-        var appointmentJson =
-            JsonSerializer.Serialize(new AppointmentCreatedMessage { AppointmentId = appointment.AppointmentId });
-
         _logger.LogInformation("Appointment processing finished successfully.");
 
         return new AppointmentsMultiResponse
         {
             HttpResponse = await req.CreateOKResponseAsJson(appointment),
-            QueueMessages = [appointmentJson],
             Appointment = appointment
         };
     }
