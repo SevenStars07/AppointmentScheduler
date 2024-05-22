@@ -10,7 +10,7 @@ public class CreateAppointmentInputValidator : AbstractValidator<CreateAppointme
         RuleFor(x => x.Date)
             .NotEmpty()
             .WithMessage("The date is required")
-            .GreaterThan(DateTime.Now)
+            .Must(date => TimeZoneInfo.ConvertTimeToUtc(date) > DateTime.UtcNow)
             .WithMessage("The appointment date must be in the future");
 
         RuleFor(x => x.Name)

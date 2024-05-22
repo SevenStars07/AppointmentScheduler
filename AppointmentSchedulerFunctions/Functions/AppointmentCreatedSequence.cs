@@ -56,7 +56,7 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
         }
         else
         {
-            await context.CreateTimer(appointment.Date.AddHours(-24), cancellationToken);
+            await context.CreateTimer(TimeZoneInfo.ConvertTimeToUtc(appointment.Date).AddHours(-24), cancellationToken);
         }
 
         await context.CallActivityAsync(nameof(NotifyUser), appointment);
