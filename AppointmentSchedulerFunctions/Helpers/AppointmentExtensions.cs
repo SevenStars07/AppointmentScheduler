@@ -11,8 +11,9 @@ public static class AppointmentExtensions
         {
             AppointmentId = Guid.NewGuid(),
             Name = input.Name,
-            Date = input.Date,
-            PhoneNumber = input.PhoneNumber
+            Date = input.Date.UtcDateTime,
+            Offset = input.Date.Offset,
+            PhoneNumber = $"{input.PhoneNumberPrefix}{input.PhoneNumber}"
         };
     }
 }

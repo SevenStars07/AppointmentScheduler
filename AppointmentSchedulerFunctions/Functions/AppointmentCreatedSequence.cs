@@ -56,9 +56,9 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
         }
         else
         {
-            var fireAt = appointment.Date.AddHours(-24).LocalDateTime;
+            var fireAt = appointment.Date.AddHours(-24);
             _logger.LogInformation($"Scheduling notification for {fireAt}");
-            await context.CreateTimer(fireAt, cancellationToken);
+             await context.CreateTimer(fireAt, cancellationToken);
         }
 
         await context.CallActivityAsync(nameof(NotifyUser), appointment);
@@ -71,13 +71,13 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
         _logger.LogInformation(
             $"Sending notification for appointment {appointment.AppointmentId} to {appointment.Name}");
         
-        var date = appointment.Date
+        var userFriendlyDate = (appointment.Date + appointment.Offset)
             .ToString("dddd, d MMMM yyyy 'ora' HH:mm", CultureInfo.CreateSpecificCulture("ro-RO"));
 
-        var message = $"Programarea dvs. pentru data de {date} a fost inregistrata cu succes.";
+        var message = $"Programarea dvs. pentru data de {userFriendlyDate} a fost inregistrata cu succes.";
         
         _logger.LogInformation(message);
 
-        // await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
+        await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
     }
 }

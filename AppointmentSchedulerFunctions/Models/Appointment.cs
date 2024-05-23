@@ -5,6 +5,7 @@ public class Appointment
     public string id => AppointmentId.ToString();
     public Guid AppointmentId { get; init; }
     public string Name { get; set; }
-    public DateTimeOffset Date { get; set; }
+    public DateTime Date { get; set; }
+    public TimeSpan Offset { get; set; }
     public string PhoneNumber { get; set; }
 }
