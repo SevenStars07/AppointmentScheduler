@@ -19,8 +19,9 @@
             "Function.CreateAppointment.User": "Information",
             "Function.AppointmentCreated.User": "Information",
             "Function.NotifyUsersOrchestrator.User": "Information",
-            "Function.NotifyUserSubOrchestrator.User": "Information",
-            "Function.NotifyUser.User": "Information"
+            "Function.NotifyUserAppointmentConfirmation.User": "Information",
+            "Function.NotifyUserReminderSubOrchestrator.User": "Information",
+            "Function.NotifyUserAppointmentReminder.User": "Information"
         }
     }
 }

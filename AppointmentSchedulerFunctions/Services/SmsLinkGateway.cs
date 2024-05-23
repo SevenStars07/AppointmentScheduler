@@ -29,12 +29,6 @@ public class SmsLinkGateway(ILoggerFactory loggerFactory): ISmsGateway
             ["message"] = message
         });
         
-        if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == "Development")
-        {
-            _logger.LogInformation("SMS sent in development mode.");
-            return;
-        }
-        
         var response = await HttpClient.PostAsync(new Uri(uri), content, cancellationToken);
         
         if (response.IsSuccessStatusCode)

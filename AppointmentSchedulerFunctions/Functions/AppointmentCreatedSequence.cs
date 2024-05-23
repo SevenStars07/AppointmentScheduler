@@ -25,7 +25,6 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
     {
         if (appointments is not { Count: > 0 }) return;
 
-
         var instanceId =
             await client.ScheduleNewOrchestrationInstanceAsync(nameof(NotifyUsersOrchestrator), appointments,
                 cancellationToken);
@@ -41,41 +40,55 @@ public class AppointmentCreatedSequence(ISmsGateway smsGateway, ILoggerFactory l
 
         foreach (var appointment in appointments)
         {
-            await context.CallSubOrchestratorAsync(nameof(NotifyUserSubOrchestrator), appointment);
+            await context.CallActivityAsync(nameof(NotifyUserAppointmentConfirmation), appointment);
+            await context.CallSubOrchestratorAsync(nameof(NotifyUserReminderSubOrchestrator), appointment);
         }
     }
 
-    [Function(nameof(NotifyUserSubOrchestrator))]
-    public async Task NotifyUserSubOrchestrator(
-        [OrchestrationTrigger] TaskOrchestrationContext context, Appointment appointment,
-        CancellationToken cancellationToken)
-    {
-        if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == "Development")
-        {
-            await context.CreateTimer(TimeSpan.FromSeconds(5), cancellationToken);
-        }
-        else
-        {
-            var fireAt = appointment.Date.AddHours(-24);
-            _logger.LogInformation($"Scheduling notification for {fireAt}");
-             await context.CreateTimer(fireAt, cancellationToken);
-        }
-
-        await context.CallActivityAsync(nameof(NotifyUser), appointment);
-    }
-
-    [Function(nameof(NotifyUser))]
-    public async Task NotifyUser([ActivityTrigger] Appointment appointment, FunctionContext executionContext,
+    [Function(nameof(NotifyUserAppointmentConfirmation))]
+    public async Task NotifyUserAppointmentConfirmation([ActivityTrigger] Appointment appointment,
+        FunctionContext executionContext,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            $"Sending notification for appointment {appointment.AppointmentId} to {appointment.Name}");
-        
+            $"Sending confirmation notification for appointment {appointment.AppointmentId} to {appointment.Name} {appointment.PhoneNumber}");
+
         var userFriendlyDate = (appointment.Date + appointment.Offset)
             .ToString("dddd, d MMMM yyyy 'ora' HH:mm", CultureInfo.CreateSpecificCulture("ro-RO"));
 
         var message = $"Programarea dvs. pentru data de {userFriendlyDate} a fost inregistrata cu succes.";
-        
+
+        _logger.LogInformation(message);
+
+        await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
+    }
+
+    [Function(nameof(NotifyUserReminderSubOrchestrator))]
+    public async Task NotifyUserReminderSubOrchestrator(
+        [OrchestrationTrigger] TaskOrchestrationContext context, Appointment appointment,
+        CancellationToken cancellationToken)
+    {
+        var fireAt = appointment.Date.AddHours(-24);
+        _logger.LogInformation($"Scheduling notification for {fireAt}");
+
+        await context.CreateTimer(fireAt, cancellationToken);
+
+        await context.CallActivityAsync(nameof(NotifyUserAppointmentReminder), appointment);
+    }
+
+    [Function(nameof(NotifyUserAppointmentReminder))]
+    public async Task NotifyUserAppointmentReminder([ActivityTrigger] Appointment appointment,
+        FunctionContext executionContext,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation(
+            $"Sending reminder notification for appointment {appointment.AppointmentId} to {appointment.Name} {appointment.PhoneNumber}");
+
+        var userFriendlyDate = (appointment.Date + appointment.Offset)
+            .ToString("dddd, d MMMM yyyy 'ora' HH:mm", CultureInfo.CreateSpecificCulture("ro-RO"));
+
+        var message = $"Va reamintim ca programarea dvs. pentru data de {userFriendlyDate} este maine.";
+
         _logger.LogInformation(message);
 
         await smsGateway.SendSms(appointment.PhoneNumber, message, cancellationToken);
